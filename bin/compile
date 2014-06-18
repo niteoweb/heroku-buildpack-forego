@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+indent() {
+  sed -u 's/^/       /'
+}
+
+# Usage: $ set-env key value
+set-env() {
+  echo "export $1=$2" >> $PROFILE_PATH
+}
+
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+VERSION="0.9.0"
+INSTALL_DIR="$BUILD_DIR/.heroku/vendor/forego"
+PROFILE_PATH="$BUILD_DIR/.profile.d/forego.sh"
+
+mkdir -p $INSTALL_DIR
+mkdir -p $(dirname $PROFILE_PATH)
+mkdir -p $CACHE_DIR
+
+if [ ! -f $CACHE_DIR/forego_$VERSION ]; then
+	echo "Fetching and installing forego" | indent
+	curl "https://godist.herokuapp.com/projects/ddollar/forego/releases/$VERSION/linux-amd64/forego" -o $INSTALL_DIR/forego
+	chmod +x $INSTALL_DIR/forego
+	cp $INSTALL_DIR/forego $CACHE_DIR/forego_$VERSION 
+else
+	echo "Installing forego from cache" | indent
+	cp $CACHE_DIR/forego_$VERSION  $INSTALL_DIR/forego 
+fi
+
+set-env PATH '/app/.heroku/vendor/forego/:$PATH'
+
+echo "Done" | indent
