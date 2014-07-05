@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ -n $(forego -v | grep "0.9.0") ]]; then
+if [[ -n $(forego version | grep "0.9.0") ]]; then
     echo "forego installed."
     exit 0
 else

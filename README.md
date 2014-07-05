@@ -40,5 +40,5 @@ Develop
     $ git push heroku master
     ...
 
-    $ heroku run "forego -v"
+    $ heroku run "forego version"
     0.9.0
