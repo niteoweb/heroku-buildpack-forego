@@ -16,7 +16,7 @@ before_script:
   - yes | heroku keys:add
   - heroku plugins:install https://github.com/heroku/heroku-repo.git
   - heroku plugins:install https://github.com/glenngillen/heroku-exit-status.git
-  - heroku repo:purge_cache
+#  - heroku repo:purge_cache
 
 script:
   - yes | git push heroku master
