@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [[ -n $(forego -v | grep "0.9.0") ]]; then
+    echo "forego installed."
+    exit 0
+else
+    echo "forego not found."
+    exit 1
+fi

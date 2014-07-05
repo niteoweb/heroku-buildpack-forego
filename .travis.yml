@@ -1,0 +1,23 @@
+env:
+  global:
+  - secure: |-
+      eearIP/ytRNaNbdBly13B78aU73+Bb9cm+XseZyR3G8waU/BVFXlsoRSyRtcTcPOA6
+      ve5PzxFmYND2dp5y2wuNMiF1pMaCdnNiW5sxPJ7DKaU+1eKWQ+hqv4Cl4mj+BsyG0/
+      rxKLNeMlYVpToC4fXg/ebSHTrvGdLD1Hut80UEM=  # HEROKU_API_KEY for travis@niteoweb.com
+
+before_script:
+  - wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+  - git remote add heroku git@heroku.com:heroku-buildpack-forego.git
+  - echo "Host heroku.com" >> ~/.ssh/config
+  - echo "   StrictHostKeyChecking no" >> ~/.ssh/config
+  - echo "   CheckHostIP no" >> ~/.ssh/config
+  - echo "   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
+  - heroku keys:clear
+  - yes | heroku keys:add
+  - heroku plugins:install https://github.com/heroku/heroku-repo.git
+  - heroku plugins:install https://github.com/glenngillen/heroku-exit-status.git
+  - heroku repo:purge_cache
+
+script:
+  - yes | git push heroku master
+  - heroku run "bin/test"
