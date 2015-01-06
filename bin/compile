@@ -14,7 +14,7 @@ set-env() {
 
 BUILD_DIR=$1
 CACHE_DIR=$2
-VERSION="0.9.0"
+VERSION="0.15.0"
 INSTALL_DIR="$BUILD_DIR/.heroku/vendor/forego"
 PROFILE_PATH="$BUILD_DIR/.profile.d/forego.sh"
 
